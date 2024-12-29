@@ -16,9 +16,9 @@ import (
 
 type Book struct {
 	Id          string `json:"id"`
-	Title       string `json:"title`
+	Title       string `json:"title"`
 	Author      string `json:"author"`
-	PublishDate string `json:"publishdate`
+	PublishDate string `json:"publishdate"`
 	Isbn        string `json:"isbn"`
 }
 
