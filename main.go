@@ -147,6 +147,24 @@ func writeBlock(w http.ResponseWriter, r *http.Request) {
 
 	blockchain.AddBlock(bookCheckout)
 
+	// Get the last added block
+	newBlock := blockchain.blocks[len(blockchain.blocks)-1]
+
+	// Respond with the new block as JSON
+	w.Header().Set("Content-Type", "application/json")
+
+	response, err := json.Marshal(newBlock)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Printf("Error encoding response: %v", err)
+
+		err := []byte(`{"error": "Failed to encode response"}`)
+		w.Write(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
 }
 
 func GetBLock(w http.ResponseWriter, r *http.Request) {
