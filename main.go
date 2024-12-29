@@ -169,13 +169,18 @@ func writeBlock(w http.ResponseWriter, r *http.Request) {
 
 func GetBLock(w http.ResponseWriter, r *http.Request) {
 	bytes, err := json.MarshalIndent(blockchain.blocks, "", "")
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(err)
 		return
 	}
 
-	io.WriteString(w, string(bytes))
+	w.Header().Set("Content-Type", "application.json")
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
+
 }
 
 //create first genesis block
